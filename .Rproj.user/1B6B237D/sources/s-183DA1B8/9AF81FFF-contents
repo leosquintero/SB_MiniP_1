@@ -1,0 +1,10 @@
+st_en_me_den <- subset(states, select = c("energy", "metro", "density")) 
+
+summary(st_en_me_plus)
+plot(st_en_me_plus)
+cor(st_en_me_plus, use = "pairwise")
+
+model2 <- lm(energy ~ metro + density, data = states)
+summary(model2)
+plot(model2)
+

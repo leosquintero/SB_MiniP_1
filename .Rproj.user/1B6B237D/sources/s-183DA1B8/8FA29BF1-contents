@@ -1,0 +1,73 @@
+## Set working directory
+## ─────────────────────────
+
+getwd()
+list.files("F:/Carpetas/R/SB_MiniP_1/linear_regression/dataSets/")
+
+# Seting working directory
+setwd(dir = "F:/Carpetas/R/SB_MiniP_1/linear_regression/dataSets/")
+
+## Load the states data
+states.data <- readRDS("F:/Carpetas/R/SB_MiniP_1/linear_regression/dataSets/states.rds")
+
+#get labels
+states.info <- data.frame(attributes(states.data)[c("names", "var.labels")])
+
+# - Checking on DataSet's structure and summary
+str(states.data)
+
+summary(states.data)
+
+## Examine the data before fitting models
+
+test_states <- subset(states.data, select = c("energy", "metro", "pop", "waste", "csat", "vsat", "high"))
+summary(test_states)
+plot(test_states)
+cor(test_states, use = "pairwise")
+
+
+states_1 <- lm(energy ~ metro + pop + waste + csat + vsat + high, data = test_states)
+summary(test_states)
+
+states_3 <- lm(energy, data = states.data)
+# - Summarysing all data to evaluate relevance
+sts_rel_all_var<- lm(pop ~ density + metro + waste + energy + miles + toxic 
+                     + green + house + senate + csat + vsat + msat + percent + expense + income + high + college, 
+                     data = states.data)
+summary(sts_rel_all_var)
+sts_rel_all_var$residuals
+SSE <- sum(sts_rel_all_var$residuals^2)
+SSE
+plot(sts_rel_all_var)
+
+
+cor(mod_2)
+cor(states.data, use = "pairwise")
+
+st_mod_test <- subset(states, select = c("pop", "area", "density", "metro", "waste", "energy", "miles", "toxic", 
+                                         "green", "house", "senate", "csat", "vsat", "msat", "percent", "expense", "income", "high", "college"))
+cor(st_mod_test, use = "pairwise")
+
+st_mod_3 <- lm(income ~ density + house + percent + metro + senate + energy + miles, data = states.data)
+summary(st_mod_3)
+
+st_mod_4 <- lm(income ~ percent + metro + energy, data = states.data)
+summary(st_mod_4)
+
+st_mod_5 <- lm(income ~ percent + metro, data = states.data)
+summary(st_mod_5)
+
+st_mod_6 <- lm(income ~ percent + metro + energy, data = states.data)
+summary(st_mod_6)
+
+st_mod_7 <- lm(income ~ percent + metro + miles, data = states.data)
+summary(st_mod_7)
+
+st_mod_8 <- lm(income ~ percent + metro + energy + miles, data = states.data)
+summary(st_mod_8)
+
+st_mod_9 <- lm(income ~ percent + metro + energy + csat + vsat, data = states.data)
+summary(st_mod_9)
+
+st_mod_10 <- lm(percent ~ metro + income + energy + csat + vsat, data = states.data)
+summary(st_mod_10)
